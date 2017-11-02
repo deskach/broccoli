@@ -5,30 +5,30 @@ import { store } from "../index";
 import InviteForm from './forms/invite';
 
 
-class Survey extends React.Component {
+class Landing extends React.Component {
     state = {
-        isSurveyModalVisible: false,
+        isInviteModalVisible: false,
         isSubmitting: false,
     };
 
-    static submitSurvey(data, done) {
+    static submitInvite(data, done) {
         const URI = encodeURI('https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth');
         axios.post(URI, data).then(() => done());
     }
 
-    toggleSurveyModal() {
-        this.setState({ isSurveyModalVisible: !this.state.isSurveyModalVisible });
+    toggleInviteModal() {
+        this.setState({ isInviteModalVisible: !this.state.isInviteModalVisible });
     }
 
     onSubmit(values) {
         const data = { name: values.fullName, email: values.email, };
 
         this.setState({ isSubmitting: true });
-        Survey.submitSurvey(data, _ => this.onSubmitted());
+        Landing.submitInvite(data, _ => this.onSubmitted());
     }
 
     onSubmitted() {
-        this.toggleSurveyModal();
+        this.toggleInviteModal();
         this.setState({ isSubmitting: false });
     }
 
@@ -36,15 +36,15 @@ class Survey extends React.Component {
         return (
             <div className={'row'}>
                 <div className={'text-center'}>
-                    <div className={'survey-wrapper'}>
+                    <div className={'invite-wrapper'}>
                         <h1>A better way to enjoy every day.</h1>
                         <p>Be the first to know when we launch.</p>
                         <button className={'btn btn-primary'}
-                                onClick={() => this.toggleSurveyModal()}
+                                onClick={() => this.toggleInviteModal()}
                         >
                             Request an invite
                         </button>
-                        <Modal store={store} visible={this.state.isSurveyModalVisible}>
+                        <Modal store={store} visible={this.state.isInviteModalVisible}>
                             <InviteForm onSubmit={values => this.onSubmit(values)}
                                         disabled={this.state.isSubmitting}
                             />
@@ -56,4 +56,4 @@ class Survey extends React.Component {
     }
 }
 
-export default Survey;
+export default Landing;
