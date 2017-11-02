@@ -6,6 +6,14 @@ import PropTypes from 'prop-types';
 
 
 class Invite extends React.Component {
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired,
+        disabled: PropTypes.bool,
+    };
+    static defaultProps = {
+        disabled: false
+    };
+
     static validate(values) {
         const errors = {}; // if empty -> the form is valid
         const regexEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -41,12 +49,8 @@ class Invite extends React.Component {
         );
     }
 
-    static propTypes = {
-        onSubmit: PropTypes.func.isRequired,
-    };
-
     render() {
-        const { handleSubmit } = this.props;
+        const { handleSubmit, disabled } = this.props;
 
         return (
             <div>
@@ -66,6 +70,7 @@ class Invite extends React.Component {
                            component={Invite.renderInput}/>
 
                     <button type={'submit'}
+                            disabled={disabled}
                             className={'btn btn-default form-control'}
                     >
                         Send

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Modal } from './modal';
 import { store } from "../index";
 import InviteForm from './forms/invite';
@@ -6,17 +7,29 @@ import InviteForm from './forms/invite';
 
 class Survey extends React.Component {
     state = {
-        isSurveyVisible: false
+        isSurveyModalVisible: false,
+        isSubmitting: false,
     };
 
-    toggleSurvey() {
-        // console.log('clicked')
-        this.setState({ isSurveyVisible: !this.state.isSurveyVisible });
+    static submitSurvey(data, done) {
+        const URI = encodeURI('https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth');
+        axios.post(URI, data).then(() => done());
+    }
+
+    toggleSurveyModal() {
+        this.setState({ isSurveyModalVisible: !this.state.isSurveyModalVisible });
     }
 
     onSubmit(values) {
-        console.log(values);
-        this.toggleSurvey();
+        const data = { name: values.fullName, email: values.email, };
+
+        this.setState({ isSubmitting: true });
+        Survey.submitSurvey(data, _ => this.onSubmitted());
+    }
+
+    onSubmitted() {
+        this.toggleSurveyModal();
+        this.setState({ isSubmitting: false });
     }
 
     render() {
@@ -26,12 +39,14 @@ class Survey extends React.Component {
                     <h1>A better way to enjoy every day.</h1>
                     <p>Be the first to know when we launch.</p>
                     <button className={'btn btn-primary'}
-                            onClick={() => this.toggleSurvey()}
+                            onClick={() => this.toggleSurveyModal()}
                     >
                         Request an invite
                     </button>
-                    <Modal store={store} visible={this.state.isSurveyVisible}>
-                        <InviteForm onSubmit={values => this.onSubmit(values)}/>
+                    <Modal store={store} visible={this.state.isSurveyModalVisible}>
+                        <InviteForm onSubmit={values => this.onSubmit(values)}
+                                    disabled={this.state.isSubmitting}
+                        />
                     </Modal>
                 </div>
             </div>
