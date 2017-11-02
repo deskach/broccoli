@@ -24,14 +24,17 @@ class Invite extends React.Component {
     }
 
     static renderInput(field) {
-        const { meta: { touched, error, type, required } } = field;
+        const { meta: { touched, error } } = field;
         const hasDanger = touched && error ? 'has-danger' : '';
         const className = `form-group ${hasDanger}`;
 
         return (
             <div className={className}>
                 <label>{field.label}</label>
-                <input type={type || 'text'}{...field.input} className={'form-control'}/>
+                <input {...field.input}
+                       type={field.type || 'text'}
+                       className={'form-control'}
+                />
                 <div className={'text-help'}>{touched && error}</div>
             </div>
         );
@@ -48,16 +51,13 @@ class Invite extends React.Component {
             <form className={'form-group'}
                   onSubmit={handleSubmit(this.onSubmit.bind(this))}>
                 <Field label={'Full name'}
-                       required={true}
                        name={'fullName'}
                        component={Invite.renderInput}/>
                 <Field label={'Email'}
-                       required={true}
                        type={'email'}
                        name={'email'}
                        component={Invite.renderInput}/>
                 <Field label={'Confirm Email'}
-                       required={true}
                        type={'email'}
                        name={'confirmEmail'}
                        component={Invite.renderInput}/>
