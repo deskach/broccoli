@@ -35,19 +35,21 @@ class Survey extends React.Component {
     render() {
         return (
             <div className={'row'}>
-                <div className={'text-xs-center'}>
-                    <h1>A better way to enjoy every day.</h1>
-                    <p>Be the first to know when we launch.</p>
-                    <button className={'btn btn-primary'}
-                            onClick={() => this.toggleSurveyModal()}
-                    >
-                        Request an invite
-                    </button>
-                    <Modal store={store} visible={this.state.isSurveyModalVisible}>
-                        <InviteForm onSubmit={values => this.onSubmit(values)}
-                                    disabled={this.state.isSubmitting}
-                        />
-                    </Modal>
+                <div className={'text-center'}>
+                    <div className={'survey-wrapper'}>
+                        <h1>A better way to enjoy every day.</h1>
+                        <p>Be the first to know when we launch.</p>
+                        <button className={'btn btn-primary'}
+                                onClick={() => this.toggleSurveyModal()}
+                        >
+                            Request an invite
+                        </button>
+                        <Modal store={store} visible={this.state.isSurveyModalVisible}>
+                            <InviteForm onSubmit={values => this.onSubmit(values)}
+                                        disabled={this.state.isSubmitting}
+                            />
+                        </Modal>
+                    </div>
                 </div>
             </div>
         );

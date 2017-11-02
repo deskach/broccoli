@@ -11,5 +11,24 @@ form a.btn {
 }
 
 header {
+    background-color: #3b5a76;
+    color: white;
+    text-align: left;
+    height: 2.5em;
+    margin: 1em 0;
+    padding: .5em 3em;
     text-transform: uppercase;
+}
+
+footer {
+    background-color: #3b5a76;
+    color: white;
+    text-align: center;
+    height: 2.5em;
+    margin: 1em 0;
+    padding: .5em;
+}
+
+.survey-wrapper {
+    padding: 5em 0;
 }
