@@ -30,8 +30,8 @@ class Invite extends React.Component {
 
         return (
             <div className={className}>
-                <label>{field.label}</label>
                 <input {...field.input}
+                       placeholder={field.placeholder}
                        type={field.type || 'text'}
                        className={'form-control'}
                 />
@@ -48,27 +48,27 @@ class Invite extends React.Component {
         const { handleSubmit } = this.props;
 
         return (
-            <form className={'form-group'}
-                  onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <Field label={'Full name'}
-                       name={'fullName'}
-                       component={Invite.renderInput}/>
-                <Field label={'Email'}
-                       type={'email'}
-                       name={'email'}
-                       component={Invite.renderInput}/>
-                <Field label={'Confirm Email'}
-                       type={'email'}
-                       name={'confirmEmail'}
-                       component={Invite.renderInput}/>
+            <div>
+                <h2 className={'text-center'}>Request an invite</h2>
+                <form className={'form-group'}
+                      onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    <Field placeholder={'Full name'}
+                           name={'fullName'}
+                           component={Invite.renderInput}/>
+                    <Field placeholder={'Email'}
+                           type={'email'}
+                           name={'email'}
+                           component={Invite.renderInput}/>
+                    <Field placeholder={'Confirm Email'}
+                           type={'email'}
+                           name={'confirmEmail'}
+                           component={Invite.renderInput}/>
 
-                <button type={'submit'}
-                        className={'btn btn-primary'}
-                >
-                    Submit
-                </button>
-                <button className={"btn btn-danger"}>Cancel</button>
-            </form>
+                    <button type={'submit'} className={'btn btn-default form-control'}>
+                        Send
+                    </button>
+                </form>
+            </div>
         );
     }
 }
