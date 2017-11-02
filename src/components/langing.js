@@ -3,11 +3,13 @@ import axios from 'axios';
 import { Modal } from './modal';
 import { store } from "../index";
 import InviteForm from './forms/invite';
+import Done from "./done";
 
 
 class Landing extends React.Component {
     state = {
         isInviteModalVisible: false,
+        isDoneModalVisible: false,
         isSubmitting: false,
     };
 
@@ -20,6 +22,10 @@ class Landing extends React.Component {
         this.setState({ isInviteModalVisible: !this.state.isInviteModalVisible });
     }
 
+    toggleDoneModal() {
+        this.setState({ isDoneModalVisible: !this.state.isDoneModalVisible });
+    }
+
     onSubmit(values) {
         const data = { name: values.fullName, email: values.email, };
 
@@ -30,6 +36,7 @@ class Landing extends React.Component {
     onSubmitted() {
         this.toggleInviteModal();
         this.setState({ isSubmitting: false });
+        this.toggleDoneModal();
     }
 
     render() {
@@ -48,6 +55,9 @@ class Landing extends React.Component {
                             <InviteForm onSubmit={values => this.onSubmit(values)}
                                         disabled={this.state.isSubmitting}
                             />
+                        </Modal>
+                        <Modal visible={this.state.isDoneModalVisible}>
+                            <Done onOk={_ => this.toggleDoneModal()}/>
                         </Modal>
                     </div>
                 </div>
