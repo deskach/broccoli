@@ -1,3 +1,6 @@
+$header-height: 3.5em;
+$header-bg-color: #3b5a76;
+
 .text-help {
     color: red;
 }
@@ -10,27 +13,29 @@ form a.btn {
     float: right;
 }
 
-header {
-    background-color: #3b5a76;
+header, footer {
+    background-color: $header-bg-color;
     color: white;
-    text-align: left;
-    height: 2.5em;
-    margin: 1em 0;
-    padding: .5em 3em;
+    height: $header-height;
+    position: absolute;
+    width: 100%;
+}
+
+header {
+    top: 0;
     text-transform: uppercase;
+    padding: 1em 3em;
+    text-align: left;
 }
 
 footer {
-    background-color: #3b5a76;
-    color: white;
     text-align: center;
-    height: 2.5em;
-    margin: 1em 0;
-    padding: .5em;
+    padding: 1em;
+    bottom: 0;
 }
 
 .invite-wrapper {
-    padding: 5em 0;
+    padding: 10em 0;
 }
 
 .done-wrapper {

@@ -16,9 +16,11 @@ export const store = createStoreWithMiddleware(reducers);
 
 ReactDOM.render(
     <Provider store={store}>
-        <div className={'container'}>
+        <div>
             <header>Broccoli & Co.</header>
-            <Landing/>
+            <div className={'container'}>
+                <Landing/>
+            </div>
             <footer>&copy; 2017 Broccoli & Co. All rights reserved.</footer>
         </div>
     </Provider>
