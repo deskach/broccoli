@@ -1,7 +1,5 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { createSurvey } from "../../actions/index";
 import PropTypes from 'prop-types';
 
 
@@ -41,6 +39,7 @@ class Invite extends React.Component {
             <div className={className}>
                 <input {...field.input}
                        placeholder={field.placeholder}
+                       disabled={field.disabled}
                        type={field.type || 'text'}
                        className={'form-control'}
                 />
@@ -51,21 +50,27 @@ class Invite extends React.Component {
 
     render() {
         const { handleSubmit, disabled } = this.props;
+        const wrapperStyle = {
+            "cursor": disabled ? "wait" : "inherit",
+        };
 
         return (
-            <div>
+            <div style={wrapperStyle}>
                 <h2 className={'text-center'}>Request an invite</h2>
                 <form className={'form-group'}
                       onSubmit={handleSubmit(this.props.onSubmit)}>
                     <Field placeholder={'Full name'}
+                           disabled={disabled}
                            name={'fullName'}
                            component={Invite.renderInput}/>
                     <Field placeholder={'Email'}
                            type={'email'}
+                           disabled={disabled}
                            name={'email'}
                            component={Invite.renderInput}/>
                     <Field placeholder={'Confirm Email'}
                            type={'email'}
+                           disabled={disabled}
                            name={'confirmEmail'}
                            component={Invite.renderInput}/>
 
@@ -84,6 +89,4 @@ class Invite extends React.Component {
 export default reduxForm({
     validate: Invite.validate,
     form: 'InviteForm',
-})(
-    connect(null, { createSurvey: createSurvey })(Invite)
-);
+})(Invite);
