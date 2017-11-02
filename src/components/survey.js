@@ -1,5 +1,5 @@
 import React from 'react';
-import InviteForm from './modals/invite';
+import InviteForm from './forms/invite';
 
 
 class Survey extends React.Component {
