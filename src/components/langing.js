@@ -11,11 +11,13 @@ class Landing extends React.Component {
         isInviteModalVisible: false,
         isDoneModalVisible: false,
         isSubmitting: false,
+        error: "",
     };
 
-    static submitInvite(data, done) {
+    static submitInvite(data, done, failed) {
         const URI = encodeURI('https://l94wc2001h.execute-api.ap-southeast-2.amazonaws.com/prod/fake-auth');
-        axios.post(URI, data).then(() => done());
+
+        axios.post(URI, data).then(res => done(res), err => failed(err));
     }
 
     toggleInviteModal() {
@@ -27,16 +29,21 @@ class Landing extends React.Component {
     }
 
     onSubmit(values) {
-        const data = { name: values.fullName, email: values.email, };
+        const data = { name: values.fullName, email: values.email };
 
         this.setState({ isSubmitting: true });
-        Landing.submitInvite(data, _ => this.onSubmitted());
+        Landing.submitInvite(data, res => this.onSubmitted(res), e => this.setError(e));
+    }
+
+    setError(error) {
+        this.setState({ error: error.message, isSubmitting: false });
     }
 
     onSubmitted() {
-        this.toggleInviteModal();
         this.setState({ isSubmitting: false });
+        this.toggleInviteModal();
         this.toggleDoneModal();
+        this.setError("");
     }
 
     render() {
@@ -53,6 +60,7 @@ class Landing extends React.Component {
                         </button>
                         <Modal store={store} visible={this.state.isInviteModalVisible}>
                             <InviteForm onSubmit={values => this.onSubmit(values)}
+                                        errorText={this.state.error}
                                         disabled={this.state.isSubmitting}
                             />
                         </Modal>

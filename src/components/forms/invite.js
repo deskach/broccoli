@@ -7,9 +7,10 @@ class Invite extends React.Component {
     static propTypes = {
         onSubmit: PropTypes.func.isRequired,
         disabled: PropTypes.bool,
+        errorText: PropTypes.string,
     };
     static defaultProps = {
-        disabled: false
+        disabled: false,
     };
 
     static validate(values) {
@@ -49,7 +50,7 @@ class Invite extends React.Component {
     }
 
     render() {
-        const { handleSubmit, disabled } = this.props;
+        const { handleSubmit, disabled, errorText } = this.props;
         const wrapperStyle = {
             "cursor": disabled ? "wait" : "inherit",
         };
@@ -81,6 +82,7 @@ class Invite extends React.Component {
                         Send
                     </button>
                 </form>
+                <p>{errorText}</p>
             </div>
         );
     }
