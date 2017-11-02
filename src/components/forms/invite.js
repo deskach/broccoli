@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { connect } from 'react-redux';
 import { createSurvey } from "../../actions/index";
+import PropTypes from 'prop-types';
 
 
 class Invite extends React.Component {
@@ -40,9 +41,9 @@ class Invite extends React.Component {
         );
     }
 
-    onSubmit(values) {
-        console.log(values);
-    }
+    static propTypes = {
+        onSubmit: PropTypes.func.isRequired,
+    };
 
     render() {
         const { handleSubmit } = this.props;
@@ -51,7 +52,7 @@ class Invite extends React.Component {
             <div>
                 <h2 className={'text-center'}>Request an invite</h2>
                 <form className={'form-group'}
-                      onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                      onSubmit={handleSubmit(this.props.onSubmit)}>
                     <Field placeholder={'Full name'}
                            name={'fullName'}
                            component={Invite.renderInput}/>
@@ -64,7 +65,9 @@ class Invite extends React.Component {
                            name={'confirmEmail'}
                            component={Invite.renderInput}/>
 
-                    <button type={'submit'} className={'btn btn-default form-control'}>
+                    <button type={'submit'}
+                            className={'btn btn-default form-control'}
+                    >
                         Send
                     </button>
                 </form>

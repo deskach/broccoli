@@ -6,11 +6,13 @@ import { Provider } from 'react-redux';
 
 export class Modal extends React.Component {
     static propTypes = {
+        visible: PropTypes.bool,
         store: PropTypes.any,
         targetStyle: PropTypes.any,
         wrapperStyle: PropTypes.any,
     };
     static defaultProps = {
+        visible: false,
         store: null,
         targetStyle: null,
         wrapperStyle: null,
@@ -39,20 +41,29 @@ export class Modal extends React.Component {
     };
 
     componentDidMount() {
-        const targetStyle = { ...Modal.targetStyle, ...this.props.targetStyle };
-        const wrapperStyle = { ...Modal.wrapperStyle, ...this.props.wrapperStyle };
-        const style2str = obj => Object.keys(obj).map(k => `${k}: ${obj[k]}`).join(';');
-
         this._modalWrapper = document.createElement('div');
-        this._modalWrapper.setAttribute("style", style2str(wrapperStyle));
         this._modalTarget = document.createElement('div');
-        this._modalTarget.setAttribute("style", style2str(targetStyle));
         this._modalWrapper.appendChild(this._modalTarget);
+
         document.body.appendChild(this._modalWrapper);
         this._render();
     }
 
-    componentWillUpdate() {
+    _updateStyles() {
+        const display = this.props.visible ? "block" : "none";
+        const wrapperStyle = {
+            ...Modal.wrapperStyle,
+            ...this.props.wrapperStyle,
+            display: display,
+        };
+        const targetStyle = { ...Modal.targetStyle, ...this.props.targetStyle };
+        const style2str = obj => Object.keys(obj).map(k => `${k}: ${obj[k]}`).join(';');
+
+        this._modalWrapper.setAttribute("style", style2str(wrapperStyle));
+        this._modalTarget.setAttribute("style", style2str(targetStyle));
+    }
+
+    componentDidUpdate() {
         this._render();
     }
 
@@ -64,6 +75,7 @@ export class Modal extends React.Component {
     _render() {
         const { store } = this.props;
 
+        this._updateStyles();
         ReactDOM.render(
             <Provider store={store}>
                 <div>{this.props.children}</div>
