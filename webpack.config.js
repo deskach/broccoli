@@ -12,6 +12,7 @@ const VENDOR_LIBS = [
     "react-redux",
     "redux",
     "redux-form",
+    "prop-types",
     "redux-promise",
 ];
 
