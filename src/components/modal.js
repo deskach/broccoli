@@ -76,12 +76,19 @@ export class Modal extends React.Component {
         const { store } = this.props;
 
         this._updateStyles();
-        ReactDOM.render(
-            <Provider store={store}>
-                <div>{this.props.children}</div>
-            </Provider>,
-            this._modalTarget
-        );
+        if (store) {
+            ReactDOM.render(
+                <Provider store={store}>
+                    <div>{this.props.children}</div>
+                </Provider>,
+                this._modalTarget
+            );
+        } else {
+            ReactDOM.render(
+                <div>{this.props.children}</div>,
+                this._modalTarget
+            );
+        }
     }
 
     render() {
