@@ -12,8 +12,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
+export const store = createStoreWithMiddleware(reducers);
+
 ReactDOM.render(
-    <Provider store={createStoreWithMiddleware(reducers)}>
+    <Provider store={store}>
         <div className={'container'}>
             <header>Broccoli & Co.</header>
             <Survey/>
